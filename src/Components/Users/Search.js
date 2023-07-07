@@ -10,22 +10,31 @@ class Search extends Component {
 
   onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(this.state.text);
-    this.props.onSearchText(this.state.text);
-    this.setState({ text: "" });
+    if (this.state.text === "") {
+      this.props.onAlert("Please Enter a User Name", "light");
+    } else {
+      console.log(this.state.text);
+      this.props.onSearchText(this.state.text);
+      this.setState({ text: "" });
+    }
   };
   render() {
     return (
-      <form className="form" onSubmit={this.onSubmitHandler}>
-        <input
-          type="text"
-          name="text"
-          placeholder="Search Users"
-          value={this.state.text}
-          onChange={this.textHandler}
-        ></input>
-        <input type="submit" value="Search"></input>
-      </form>
+      <>
+        <form className="form" onSubmit={this.onSubmitHandler}>
+          <input
+            type="text"
+            name="text"
+            placeholder="Search Users"
+            value={this.state.text}
+            onChange={this.textHandler}
+          ></input>
+          <input type="submit" value="Search"></input>
+        </form>
+        {this.props.showUsers && (
+          <button onClick={this.props.onClearUsers}>Clear Users</button>
+        )}
+      </>
     );
   }
 }
